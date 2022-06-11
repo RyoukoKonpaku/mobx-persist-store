@@ -2,9 +2,17 @@ import { IAutorunOptions } from 'mobx';
 
 export type ReactionOptions = IAutorunOptions & { fireImmediately?: boolean };
 
-export interface PersistenceStorageOptions<P> extends StorageOptions {
+export type PropertyOptionDefinition<T, P extends keyof T> = P | PersistPropertyConverter<T, P>;
+
+export interface PersistenceStorageOptions<T, P extends keyof T> extends StorageOptions {
   name: string;
-  properties: P[];
+  properties: PropertyOptionDefinition<T, P>[];
+}
+
+export interface PersistPropertyConverter<T, TKey extends keyof T> {
+  key: TKey;
+  serialize: (prop: any) => any;
+  deserialize: (prop: any) => any;
 }
 
 export interface StorageOptions {

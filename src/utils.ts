@@ -1,4 +1,4 @@
-import { StorageController } from './types';
+import { PersistPropertyConverter, StorageController } from './types';
 
 export const buildExpireTimestamp = (milliseconds: number): number => {
   return new Date().getTime() + milliseconds;
@@ -18,6 +18,19 @@ export const isDefined = <T>(t: T | null | undefined): t is T => t != null;
  */
 export const isObject = (data: any): boolean => {
   return Boolean(data) && Array.isArray(data) === false && typeof data === 'object';
+};
+
+/**
+ * Check if object is a property converter
+ */
+export const isPropertyConverterObject = <T, P extends keyof T>(
+  object: number | symbol | string | PersistPropertyConverter<T, P>
+): object is PersistPropertyConverter<T, P> => {
+  if (typeof object === 'string' || typeof object === 'number' || typeof object === 'symbol') {
+    return false;
+  }
+
+  return true;
 };
 
 /**
