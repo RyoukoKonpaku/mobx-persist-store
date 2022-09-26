@@ -1,5 +1,5 @@
 import { PersistStoreMap } from './PersistStoreMap';
 
 export const getPersistedStore = async <T>(target: T): Promise<T | null> => {
-  return (PersistStoreMap.get(target)?.getPersistedStore() as T) ?? null;
+  return (PersistStoreMap.get(target)?.getPersistedStore() as Promise<T> | null) ?? null;
 };
